@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    var w = 500
+    var h = 500
+
+    // 创建小球
+    function Ball(x, y) {
+        this.x = x;
+        this.y = y;
+        this.r = 60;
+        this.color = '#' + parseInt(Math.random() * 0xffffff).toString(16);
+    }
+    /*
+    画圆
+    */
+    function drawCircle(x, y, r, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = color || '#000';
+        ctx.fill()
+    }
+    Ball.prototype.show = function() {
+        this.r--;
+        drawCircle(this.x, this.y, this.r, this.color)
+    }
+    var ball = new Ball(100, 100);
+    ball.show()
+        //小球数组
+    var ballArr = [];
+
+    //鼠标移动
+    window.onmousemove = function(e) {
+        let ball = new Ball(e.x, e.y);
+        ballArr.push(ball);
+        ball.show()
+    }
+    setInterval(() => {
+        //清楚画布
+        ctx.clearRect(0, 0, w, h)
+        for (var i = 0; i < ballArr.length; i++) {
+            let ball = ballArr[i];
+            //小球的小于0就要删除这个小球
+            if (ball.r <= 0) {
+                ballArr.splice(i, 1)
+            } else {
+                ball.show()
+            }
+        }
+    }, 10)
+</script>

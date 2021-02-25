@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    canvas {
+        margin: 0 auto;
+        border: 1px solid black;
+        display: block;
+    }
+</style>
+
+<body>
+
+    <body>
+        <canvas width="500px" height="500px" id="canvas">您的浏览器版本过低，请升级</canvas>
+    </body>
+</body>
+
+</html>
+<script>
+    //获取元素
+    var canvas = document.getElementById('canvas');
+    //开始上下文
+    var ctx = canvas.getContext('2d');
+    /*
+      rect(x,y,width, height);绘制矩形
+      x: 矩形左上角的 x坐标
+      y:矩形左上角的 y坐标
+      width： 矩形宽度
+      height： 矩形的高度
+    */
+    ctx.rect(100, 100, 300, 200);
+    //边框颜色 如果需要填充边框和里面矩形的颜色，需要先描述边框然后在填充矩形里面的颜色
+    ctx.strokeStyle = "red";
+    //描边
+    ctx.lineWidth = 5;
+    ctx.stroke()
+        //填充里面的颜色
+    ctx.fillStyle = "yellow"
+    ctx.fill() //默认是黑色
+        /*
+         fillRect(x,y,width,height) 绘制实心矩形
+         strokeRect(x,y,width,height) 绘制空心矩形
+        */
+    ctx.fillStyle = "pink"
+    ctx.fillRect(100, 400, 100, 100)
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(300, 100, 100, 100)
+</script>

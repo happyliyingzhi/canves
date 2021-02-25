@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    async function async1() {
+        console.log("async1 start"); //2  同步事件
+        await async2(); //3  执行完后继续走同步事件
+        console.log("async1 end"); //6  await之后的代码 首选进入promise异步队列
+    }
+    async function async2() {
+        console.log('async2'); //3
+    }
+    console.log("script start"); // 1  同步事件！
+    setTimeout(function() {
+        console.log("settimeout"); //8  最后，定时器的异步走最后！！！
+    }, 0);
+    async1(); //2  走异步函数内部的同步事件
+    new Promise(function(resolve) {
+        console.log("promise1"); //4  同步事件！
+        resolve();
+    }).then(function() {
+        console.log("promise2"); //7  最后进入promise异步队列
+    });
+    console.log('script end'); //5  同步事件！
+    for (let n = 1; n <= 5; n++) {
+        setTimeout(function() {
+            console.log(n)
+        }, 1000 * n);
+    }
+</script>

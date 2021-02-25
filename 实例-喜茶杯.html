@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    //画茶身
+    ctx.lineWidth = 5;
+    ctx.strokeRect(100, 200, 200, 200)
+        //画把手
+    drawCircle(300, 300, 50, 8, false, 'red')
+
+    //画茶气焰
+    // drawCircle(120, 120, 20, 1, true)
+    // drawCircle(120, 160, 20, 1, false)
+    // drawCircle(160, 120, 20, 1, true)
+    // drawCircle(160, 160, 20, 1, false)
+    // drawCircle(200, 120, 20, 1, true)
+    // drawCircle(200, 160, 20, 1, false)
+    // drawCircle(240, 120, 20, 1, true)
+    // drawCircle(240, 160, 20, 1, false)
+    for (let i = 0; i < 4; i++) {
+        drawCircle(120 + i * 40, 120, 20, 1, true)
+        drawCircle(120 + i * 40, 160, 20, 1, false)
+    }
+    //画半圆弧行
+    function drawCircle(x, y, r, width, flag, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, -Math.PI / 2, Math.PI / 2, flag);
+        ctx.lineWidth = width
+        ctx.strokeStyle = color || '#000'
+        ctx.stroke()
+    }
+</script>

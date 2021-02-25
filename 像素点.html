@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     getImageData()
+     返回ImageData 对象，该对象拷贝了画布指定矩形的像素数据
+     对于ImageData 对象中的每个像素，都存在四方面的信息，rgba
+     var imgData = context.getImageData(x,y,widht,height);
+     x,左上角的x坐标
+     y,左上角的y坐标
+     width 将要复制的矩形区域的宽度
+     height 将要赋值的矩形区域的高度
+    */
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, 100, 100)
+</script>

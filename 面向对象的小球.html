@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     arc(x,y,radius,startAngle, endAngle, counterclockwise)
+     x,y 描述的弧的圆形的圆心的坐标
+     radius 描述的弧的圆形的半径
+     startAngle, endAngle
+     沿着圆指定弧的开始点和结束点的一个角度，这个角度用弧度来衡量
+     沿着X轴正半轴的三点钟的角度为0，角度沿着逆时针方向而增加
+     counterclockwise 弧沿着圆角行逆时针方向true顺时针方向为false
+    */
+    /*
+    x:起始x坐标
+    y:起始y坐标
+    r：小球半径
+    color: 小球的颜色
+    xSpeed: x轴的速度
+    ySpeed: y轴的速度
+    */
+    var w = 500;
+    var h = 500;
+
+    function r(num) {
+        return Math.random() * num;
+    }
+
+    function Ball() {
+        this.x = r(5) + 60;
+        this.y = r(3) + 60;
+        this.r = r(50) + 10;
+        this.color = '#' + parseInt(Math.random() * 0xffffff).toString(16);
+        this.xSpeed = r(3) + 2;
+        this.ySpeed = r(3) + 1;
+    }
+
+    //定义小球的方法
+    Ball.prototype.show = function() {
+            //更新坐标
+            // console.log(this.run())
+            this.run()
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill()
+        }
+        //创建小球运动
+    Ball.prototype.run = function() {
+            if (this.x - this.r < 0 || this.x + this.r >= w) {
+                this.xSpeed = -this.xSpeed;
+            }
+            if (this.y - this.r < 0 || this.y + this.r >= h) {
+                this.ySpeed = -this.ySpeed;
+            }
+            this.x = this.x + this.xSpeed;
+            this.y = this.y + this.ySpeed
+        }
+        // 创建小球
+    var ballArr = []
+    for (var i = 0; i < 50; i++) {
+        var ball = new Ball();
+        ballArr.push(ball)
+            // ball.show()
+    }
+    //小球运动
+    setInterval(() => {
+        // console.log(ballArr)
+        //清楚画布
+        ctx.clearRect(0, 0, w, h);
+        for (var i = 0; i < ballArr.length; i++) {
+            var newball = ballArr[i];
+            // newball.run();
+            newball.show()
+        }
+    }, 10)
+</script>

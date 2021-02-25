@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    canvas {
+        margin: 0 auto;
+        border: 1px solid black;
+        display: block;
+    }
+</style>
+
+<body>
+    <canvas width="500px" height="500px" id="canvas">您的浏览器版本过低，请升级</canvas>
+</body>
+
+</html>
+<script>
+    let begainNum = 100;
+    let endNum = 400;
+    //获取元素
+    var canvas = document.getElementById('canvas');
+    //开始上下文
+    var ctx = canvas.getContext('2d');
+    //画正方形
+    // drawLine(begainNum, begainNum, endNum, begainNum, 'red', 2);
+    // drawLine(begainNum, begainNum, begainNum, endNum, 'green', 2);
+    // drawLine(begainNum, endNum, endNum, endNum, 'pink', 2);
+    // drawLine(endNum, endNum, endNum, begainNum, 'yellow', 2);
+    //画虚线
+    for (var i = 0; i < 30; i++) {
+        drawLine(100 + 10 * i, 100, 105 + 10 * i, 100, 'red', 2)
+    }
+    for (var i = 0; i < 30; i++) {
+        drawLine(100 + 10 * i, 100 + 10 * i, 105 + 10 * i, 105 + 10 * i, 'green', 2)
+    }
+    //结束路径
+    ctx.closePath();
+    /**
+     * 开始的点：x1 y1
+     * 结束的点: z1 z2
+     * 颜色：color
+     * 宽度： width
+     * 
+     * */
+    function drawLine(x1, y1, z1, z2, color, width) {
+        //开始一条路径
+        ctx.beginPath();
+        //确定起始点
+        ctx.moveTo(x1, y1);
+        //确定结束点
+        ctx.lineTo(z1, z2);
+        //设置线的颜色，需要在着色之前
+        ctx.strokeStyle = color;
+        //设置线的宽高
+        ctx.lineWidth = width;
+        //着色
+        ctx.stroke();
+        //结束路径
+        ctx.closePath()
+    }
+</script>

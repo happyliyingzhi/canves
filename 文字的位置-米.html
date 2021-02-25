@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     水平居中：textAlign:start end left center
+     垂直居中：textBaseline: top middle bottom
+    */
+
+    drawText(250, 0, 250, 500, 'gold');
+    drawText(0, 250, 500, 250);
+    ctx.font = "200px 宋体";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = "middle";
+    ctx.fillText('米', 250, 250);
+    //画对角线虚线
+    //方法一：用直线画
+    // for (var i = 0; i < 500; i += 10) {
+    //     drawText(i + 0, i + 0, i + 5, i + 5)
+    // }
+    // for (var i = 0; i < 500; i += 10) {
+    //     drawText(500 - i + 0, i + 0, 500 - (i + 5), i + 5)
+    // }
+    //方法二：setLineDash属性画  参数一：线的长度 参数二：为线与线之间的空隙
+    ctx.setLineDash([40, 10]);
+    drawText(0, 0, 500, 500, 'red')
+    drawText(500, 0, 0, 500)
+
+    function drawText(x1, y1, x2, y2, color) {
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath()
+    }
+</script>

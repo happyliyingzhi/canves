@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    let count = 0;
+    var deg = Math.PI * 2 / 360
+    console.log(Math.PI)
+    let timer = setInterval(() => {
+        count++;
+        // console.log('count', count * deg)
+        ctx.beginPath();
+        ctx.arc(100, 100, 50, -Math.PI / 2, count * deg, false);
+        ctx.lineWidth = 5
+        ctx.strokeStyle = '#000'
+        ctx.stroke();
+        if (count === 360) {
+            clearInterval(timer)
+        }
+    }, 10)
+</script>

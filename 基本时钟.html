@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .clock {
+        width: 400px;
+        margin: 100px auto;
+        background: #ddd;
+        border-radius: 20px;
+    }
+</style>
+
+<body>
+    <div class="clock">
+        <canvas id="cont" width="400px" height="400px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+    </div>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     定义基础
+    */
+    var w = h = 400; //时钟的宽高
+    var x = y = 200; // 时钟中心坐标
+    var r = 180; // 时钟的半径
+    var r_hour = 60; //时钟的长度
+    var r_minute = 120; //时钟的长度
+    var r_second = 140; //时钟的长度
+    var r_text = 140 //定义表盘文字的半径
+    var r_square = 165 //刻度
+    var r_circle = 10 //表盘小圆点
+    var deg = 2 * Math.PI // 定义基本的圆周
+        /*
+     画文字
+    */
+    function drawText(text, x, y) {
+        ctx.font = "20px 楷体";
+        ctx.textAlign = "top";
+        ctx.textBaseline = "middle";
+        ctx.fillText(text, x, y)
+            // console.log(text)
+    }
+    /*
+    画圆
+    */
+    function drawCircle(x, y, r, color) {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = color || '#000';
+        ctx.fill()
+    }
+    /*
+    画直线
+    */
+    function drawLine(x1, y1, x2, y2, color, width) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = color || '#000';
+        // debugger
+        ctx.lineWidth = width;
+        ctx.stroke();
+        //让指针头变圆
+        ctx.lineCap = "round";
+        ctx.closePath()
+    }
+    //平移中心点
+    ctx.translate(w / 2, h / 2);
+    //获取当前的时间
+    function getTime() {
+        //画圆盘
+        drawCircle(0, 0, r, '#fff'); //每次都要重新绘画钟表的圆
+        // ctx.clearRect(0, 0, 500, 500)
+        var date = new Date();
+        var hour = date.getHours() * (deg / 12) - deg / 4; // [0-23]
+        var miunte = date.getMinutes() * (deg / 60) - deg / 4; //[0-59]
+        var second = date.getSeconds() * (deg / 60) - deg / 4 //[0-59]
+        drawLine(0, 0, r_hour * Math.cos(hour), r_hour * Math.sin(hour), '#000', 10)
+        drawLine(0, 0, r_minute * Math.cos(miunte), r_minute * Math.sin(miunte), '#000', 5)
+        drawLine(0, 0, r_second * Math.cos(second), r_second * Math.sin(second), 'red', 2)
+
+        //画时钟的表针
+        // drawLine(0, 0, r_hour, 0, '#000', 10)
+        // drawLine(0, 0, r_minute, 0, '#000', 5)
+        // drawLine(0, 0, r_second, 0, 'red', 1);
+        //画表订
+        drawCircle(0, 0, r_circle, '#000');
+        //画表数字
+        for (var i = 1; i <= 12; i++) {
+            var q = ((Math.PI * 2) / 12) * i - Math.PI / 2;
+            var x = r_text * Math.cos(q);
+            var y = r_text * Math.sin(q);
+            drawText(i, x, y)
+        };
+        //画表刻度
+        for (var i = 1; i <= 60; i++) {
+            var q = ((Math.PI * 2) / 60) * i - Math.PI / 2;
+            var x1 = r * Math.cos(q);
+            var y1 = r * Math.sin(q);
+            if (i % 5 === 0) {
+                var x2 = r_square * Math.cos(q);
+                var y2 = r_square * Math.sin(q);
+                drawLine(x1, y1, x2, y2, '#999', 3)
+            } else {
+                var x2 = (r_square + 3) * Math.cos(q);
+                var y2 = (r_square + 3) * Math.sin(q);
+                drawLine(x1, y1, x2, y2, '#999', 2)
+            }
+        }
+    }
+    getTime()
+        //    钟转动
+    setInterval(() => {
+        getTime()
+    }, 1000)
+</script>

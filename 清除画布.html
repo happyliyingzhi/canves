@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    ctx.rect(100, 100, 300, 200);
+    //边框颜色 如果需要填充边框和里面矩形的颜色，需要先描述边框然后在填充矩形里面的颜色
+    ctx.strokeStyle = "red";
+    ctx.fillStyle = 'yellow'
+    ctx.stroke();
+    ctx.fill();
+    /*
+     clearRect(x,y,width,height);清除画布
+    */
+    ctx.clearRect(100, 100, 200, 20)
+</script>

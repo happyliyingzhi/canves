@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     arc(x,y,radius,startAngle, endAngle, counterclockwise)
+     x,y 描述的弧的圆形的圆心的坐标
+     radius 描述的弧的圆形的半径
+     startAngle, endAngle
+     沿着圆指定弧的开始点和结束点的一个角度，这个角度用弧度来衡量
+     沿着X轴正半轴的三点钟的角度为0，角度沿着逆时针方向而增加
+     counterclockwise 弧沿着圆角行逆时针方向true顺时针方向为false
+    */
+    ctx.beginPath()
+    ctx.arc(250, 250, 100, 0, Math.PI, true);
+    ctx.lineWidth = 3;
+    // ctx.strokeStyle = 'red';
+    ctx.stroke();
+    // ctx.fillStyle = "yellow";
+    // ctx.fill()
+    ctx.beginPath();
+    ctx.arc(200, 200, 100, 0, Math.PI, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(100, 100, 100, 0, Math.PI, false);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(300, 100, 100, 0, Math.PI, true);
+    ctx.stroke();
+</script>

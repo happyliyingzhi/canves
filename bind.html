@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let map = [{
+        pos: [0, 1],
+        isPath: false,
+        isStartPos: true
+    }, {
+        pos: [1, 2],
+        isPath: false,
+        isStartPos: true
+    }]
+    let currentPathPos = [
+        [3, 0],
+        [2, 1],
+        [1, 0],
+        [0, 0],
+        [0, 1]
+    ]
+    console.log('currentPathPos原始的', currentPathPos)
+    let [itemX, itemY] = map[0].pos;
+    console.log(itemX, itemY);
+    let array = map.map(item => {
+        item.isPath = true
+        return {
+            item: 1
+        }
+    })
+    console.log('map', map);
+    console.log('array', array);
+
+    function gobackByPos() {
+        let backAni = []
+        let fn = (middleTarget) => {
+                console.log('middleTarget', middleTarget)
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        currentPathPos.pop();
+                        console.log('currentPathPos', currentPathPos)
+                        resolve(1)
+                    }, 1000);
+                })
+            }
+            // 方式一：让函数依次执行
+            // let fnzhixing = async() => {
+            //     for (let i = 1; i < currentPathPos.length; i++) {
+            //         console.log('i', i)
+            //         await fn(currentPathPos[i])
+            //     }
+            // }
+            //函数依次执行的，利用的bind返回的函数，存入空的数组里面，然后偏利数组
+        currentPathPos.find(([posx, poy]) => {
+            console.log(`pos: ${posx}, poy: ${poy}`)
+                // gobackByPos([posx, poy])
+            backAni.push(fn.bind(null, [posx, poy]));
+        })
+        let runPromiseByQueue = async(fnparam) => {
+            for (let i = 0; i < fnparam.length; i++) {
+                await fnparam[i]();
+            }
+        }
+        runPromiseByQueue(backAni)
+            // fnzhixing()
+    };
+    gobackByPos()
+
+    function fn(a) {
+        console.log('a', a)
+        return a;
+    }
+    // console.log('bind', fn.bind(null, 10))
+    var _fn = fn.bind(null, 10);
+    console.log('_fn', _fn)
+    var ans = _fn(20, 30); // 60
+    console.log('ans', ans)
+</script>

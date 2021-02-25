@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    /*
+     fillText(text, x,y,maxWidth)
+     text 规定在画布上输出的文本
+     x开始绘制文本的x坐标位置（相对于画布）
+     y开始绘制文本的y坐标位置 （相对于画布）
+     maxWidth 可选 ，允许的最大文本宽度，以像素计
+    */
+    //先设置字体的大小和字体类型，然后在画
+    ctx.font = "100px 宋体";
+    ctx.fillStyle = "red"
+    ctx.fillText('hello', 200, 100);
+    /*绘制空心文字*/
+    ctx.font = "50px 宋体";
+    ctx.strokeStyle = "gold";
+    ctx.strokeText('您好', 0, 250);
+    /*设置字体的最大宽度 从你设置的起点开始往后伸长一百米*/
+    ctx.strokeText('您好rererererererer', 300, 50, 100);
+    /*应用渐变
+     */
+    var gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient.addColorStop('0', 'yellow');
+    gradient.addColorStop('0.5', 'blue');
+    gradient.addColorStop('1.0', 'red');
+    ctx.strokeStyle = gradient;
+    ctx.strokeText('我是应用渐变空心', 100, 300, 500);
+    ctx.fillStyle = gradient;
+    ctx.fillText('我是应用渐变', 100, 500, 500)
+</script>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    var count = 0;
+    var owner = {}
+        //回调函数的封装
+    function invokecbOnce(paramName, param = {}) {
+        return new Promise((resolve, reject) => {
+            let newParam = param;
+            const callbackFunName = genernFun(paramName)
+            newParam = {
+                callBack: callbackFunName,
+                ...param
+            }
+            owner[callbackFunName] = (data) => {
+                const res = typeof data === 'string' ? JSON.parse(data) : data;
+                if (res.code === 0) {
+                    resolve(res)
+                } else {
+                    reject(res)
+                }
+            }
+            startCall(paramName, newParam)
+        })
+    }
+
+    function genernFun(paramName) {
+        const callBack = String(count++);
+        return `cb_${paramName}_${callBack}_${Date.now()}`
+    }
+
+    const getUserInfo = () => {
+        return invokecbOnce('getUserInfoMock')
+    }
+    const startCall = (paramName, param) => {
+        owner.call(paramName, JSON.stringify(param))
+    }
+
+    function calltest() {
+        owner.call = (method, jsonParam) => {
+            const param = JSON.parse(jsonParam)
+                // `${method}` (param)
+            getUserInfoMock(param)
+        }
+    }
+
+    const getUserInfoMock = (param) => {
+        const callbackFunName = param.callBack;
+        console.log('callbackFunName', callbackFunName)
+        console.log('owner', owner)
+        owner[callbackFunName](
+            JSON.stringify({
+                code: 0,
+                msg: '',
+                data: {
+                    name: '4343'
+                }
+            })
+        )
+    }
+    const getDeviceInfo = () => {
+        getUserInfo().then(res => {
+            console.log('res', res)
+        })
+    }
+    this.calltest()
+    getDeviceInfo()
+</script>

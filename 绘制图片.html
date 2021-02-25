@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #cont {
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <canvas id="cont" width="500px" height="500px">
+        您的浏览器版本过低，请升级浏览器
+    </canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.querySelector('#cont');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.src = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201312%2F31%2F111859myvyiivetyftfz2n.jpg&refer=http%3A%2F%2Fattach.bbs.miui.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1616403496&t=6ed56789a3be3d127f0761c6f8a721f6";
+    /*
+      onload加载成功完后
+      error加载失败
+    */
+    img.onload = function() {
+        console.log(img.width, img.height);
+        /*
+         context.drawImage(img,x,y);
+         context.drawImage(img,sx,sy, swidth, sheight x,y,width,height)
+         sx: 可选 开始剪切的x坐标位置
+         sy： 可选 开始剪切y坐标位置
+         swidth：可选被剪切图片的宽度
+         sheight： 可选 被剪切图片的高度
+         x: 画布上面放置图片的x坐标位置
+         y:画布上放置图片的y坐标位置
+         width: 可选 图像的宽度
+         height：可选图片的高度
+        */
+        ctx.drawImage(img, 0, 0, 500, 500) //设置图片的大小
+        ctx.drawImage(img, 100, 20, 100, 100, 10, 100, 500, 500)
+    }
+</script>
